@@ -30,6 +30,9 @@ dependencies:
   cupertino_icons: ^1.0.0
   flutter_bloc: ^6.0.5
   http: any
+  auto_size_text: ^2.1.0
+  flutter_screenutil: ^2.3.1
+  flutter_staggered_grid_view: ^0.3.2
 
 dev_dependencies:
   flutter_test:
