@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wallpaper/shared/custom-widgets/custom-text.dart';
 
 class MyAppBar extends StatelessWidget with PreferredSizeWidget{
   GlobalKey<ScaffoldState> scaffoldKey;
