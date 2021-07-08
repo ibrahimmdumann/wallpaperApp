@@ -4,11 +4,11 @@ import 'home-models.dart';
 class ImagesServices{
 
   Future getImages() async {
-    const baseUrl = 'https://jsonplaceholder.typicode.com/photos';
+    var baseUrl = Uri.parse('http://idriscelebi.com/eviller_scorpion/api.php?home');
 
     var response = await http.get(baseUrl);
 
-    return imagesFromJson(response.body);
+    return materialWallpaperFromJson(response.body);
 
   }
 

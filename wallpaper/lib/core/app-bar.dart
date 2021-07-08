@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MyAppBar extends StatelessWidget with PreferredSizeWidget{
-  GlobalKey<ScaffoldState> scaffoldKey;
+  GlobalKey<ScaffoldState>? scaffoldKey;
   MyAppBar({this.scaffoldKey});
+  
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -16,12 +17,12 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget{
       title: IconButton(
         icon: Icon(Icons.spa_outlined),
         onPressed: (){
-          scaffoldKey.currentState.openDrawer();
+          scaffoldKey?.currentState?.openDrawer();
         },
       )
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(50);
+  Size get preferredSize => Size.fromHeight(40);
 }

@@ -7,15 +7,15 @@ class HomeManager extends Bloc<Event, States>{
   HomeManager() : super(States.Loading);
 
   ImagesServices _imagesServices = new ImagesServices();
-  List<Images> images = new List<Images>();
+  late MaterialWallpaper materialWallpaper;
 
   @override
   Stream<States> mapEventToState(event) async* {
     switch(event){
       case Event.GetImages:
         yield States.Loading;
-        images = await _imagesServices.getImages();
-        if(images.length>0){
+        materialWallpaper = await _imagesServices.getImages();
+        if(materialWallpaper.materialWallpaper.length>0){
           yield States.Loaded;
         }
         else{

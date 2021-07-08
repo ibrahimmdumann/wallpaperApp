@@ -16,16 +16,13 @@ class BeforeStarting extends StatelessWidget {
         switch(states){
           case States.Loading:
             return SplashScreen();
-            break;
           case States.Loaded:
             return BlocProvider(
               create: (context) => RouteBloc(),
               child: RouteManager(),
             );
-            break;
           default:
             return Center(child: Text('Birşeyler Ters Gitti'));
-            break;
         }
       }
     );

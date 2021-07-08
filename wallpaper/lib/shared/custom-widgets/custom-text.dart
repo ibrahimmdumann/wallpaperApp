@@ -1,18 +1,17 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class CustomText extends StatelessWidget {
-  String text;
-  int maxLines;
-  double fontSize;
-  double minFontSize;
-  double maxFontSize;
-  double letterSpacing;
-  double wordSpacing;
-  TextOverflow textOverFlow;
-  Color color;
-  TextAlign textAlign;
-  FontWeight fontWeight;
+  String? text;
+  int? maxLines;
+  double? fontSize;
+  double? minFontSize;
+  double? maxFontSize;
+  double? letterSpacing;
+  double? wordSpacing;
+  TextOverflow? textOverFlow;
+  Color? color;
+  TextAlign? textAlign;
+  FontWeight? fontWeight;
   CustomText({
     this.text,
     this.maxLines,
@@ -28,7 +27,7 @@ class CustomText extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return AutoSizeText(
+    return Text(
       '${text??''}',
       style: TextStyle(
         fontSize: fontSize??16,
@@ -39,8 +38,8 @@ class CustomText extends StatelessWidget {
       ),
       textAlign: textAlign??TextAlign.center,
       maxLines: maxLines??1,
-      maxFontSize: maxFontSize??30,
-      minFontSize: minFontSize??11,
+      //maxFontSize: maxFontSize??30,
+      //minFontSize: minFontSize??11,
       overflow: textOverFlow??TextOverflow.ellipsis
     );
   }

@@ -1,37 +1,50 @@
 import 'dart:convert';
 
-List<Images> imagesFromJson(String str) => List<Images>.from(json.decode(str).map((x) => Images.fromJson(x)));
+MaterialWallpaper materialWallpaperFromJson(String str) => MaterialWallpaper.fromJson(json.decode(str));
 
-String imagesToJson(List<Images> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String materialWallpaperToJson(MaterialWallpaper data) => json.encode(data.toJson());
 
-class Images {
-    Images({
-        this.albumId,
-        this.id,
-        this.title,
-        this.url,
-        this.thumbnailUrl,
+class MaterialWallpaper {
+    MaterialWallpaper({
+        required this.materialWallpaper,
     });
 
-    int albumId;
-    int id;
-    String title;
-    String url;
-    String thumbnailUrl;
+    List<Images> materialWallpaper;
 
-    factory Images.fromJson(Map<String, dynamic> json) => Images(
-        albumId: json["albumId"],
-        id: json["id"],
-        title: json["title"],
-        url: json["url"],
-        thumbnailUrl: json["thumbnailUrl"],
+    factory MaterialWallpaper.fromJson(Map<String, dynamic> json) => MaterialWallpaper(
+        materialWallpaper: List<Images>.from(json["MaterialWallpaper"].map((x) => Images.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        "albumId": albumId,
+        "MaterialWallpaper": List<dynamic>.from(materialWallpaper.map((x) => x.toJson())),
+    };
+}
+class Images {
+    Images({
+        required this.id,
+        required this.catId,
+        required this.image,
+        required this.thumb,
+        required this.orjImg
+    });
+
+    dynamic id;
+    dynamic catId;
+    String image;
+    String thumb;
+    String orjImg;
+
+    factory Images.fromJson(Map<String, dynamic> json) => Images(
+        id: json["id"],
+        catId: json["cat_id"],
+        image: json["image"],
+        thumb: "https://idriscelebi.com/eviller_scorpion/upload/thumbs/${json['image']}",
+        orjImg: "https://idriscelebi.com/eviller_scorpion/upload/${json['image']}"
+    );
+
+    Map<String, dynamic> toJson() => {
         "id": id,
-        "title": title,
-        "url": url,
-        "thumbnailUrl": thumbnailUrl,
+        "cat_id": catId,
+        "image": image,
     };
 }
