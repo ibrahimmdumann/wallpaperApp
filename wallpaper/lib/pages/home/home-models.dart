@@ -46,5 +46,7 @@ class Images {
         "id": id,
         "cat_id": catId,
         "image": image,
+        "thumb": thumb,
+        "orjImg": orjImg
     };
 }

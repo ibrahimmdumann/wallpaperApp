@@ -78,7 +78,7 @@ class ThumbImage extends StatelessWidget {
 
   void fullscreenNavigator(BuildContext context, Images image){
     Navigator.push(context, MaterialPageRoute(
-      builder: (context) => FullScreenImage(url: image.orjImg, thumb: image.thumb,))
+      builder: (context) => FullScreenImage(image: image,))
     );
   }
 }

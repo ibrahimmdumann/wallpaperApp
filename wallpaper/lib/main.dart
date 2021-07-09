@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wallpaper/pages/before-starting.dart';
+import 'package:wallpaper/pages/favorite/favorite-manager.dart';
 import 'package:wallpaper/pages/home/home-manager.dart';
+import 'package:wallpaper/pages/route-bloc.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +22,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: BlocProvider(
-        create: (context) => HomeManager(),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => HomeManager()),
+          BlocProvider(create: (context) => RouteBloc()),
+          BlocProvider(create: (context) => FavoriteManager()..add(FavoriteEvent.GetFavorites))
+        ],
         child: BeforeStarting(),
       ),
     );
