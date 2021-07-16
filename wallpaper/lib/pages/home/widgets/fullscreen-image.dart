@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:wallpaper/pages/home/home-models.dart';
+import 'package:wallpaper/pages/home/widgets/animation-fab/expandable-fab.dart';
+import 'package:wallpaper/pages/home/widgets/fullscreen-fla.dart';
 import 'package:wallpaper/shared/custom-widgets/custom-slide-trans.dart';
 import 'package:wallpaper/shared/custom-widgets/custom-text.dart';
 import 'package:wallpaper/shared/database/app-cruds.dart';
@@ -25,8 +27,10 @@ class _FullScreenImageState extends State<FullScreenImage> {
   }
 
   Future isFav() async {
+    print(widget.image.image);
     var a = await _appCruds.isFavorite(widget.image);
     setState(() {
+      print(a);
         isFavorite = a != null;
       });
   }
@@ -68,17 +72,17 @@ class _FullScreenImageState extends State<FullScreenImage> {
             ),
           ),
         ),
-        Align(
+        /* Align(
           alignment: Alignment.bottomCenter,
           child: Container(
             height: 40,
-            color: Colors.white.withOpacity(0.75),
+            color: Colors.white.withOpacity(0.3),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextButton.icon(
                   onPressed: () => favoriteButton(),
-                  icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_outline, color: Colors.black),
+                  icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_outline, color: Colors.white),
                   label: CustomText(text: '',),
                 ),
                 TextButton.icon(
@@ -106,17 +110,25 @@ class _FullScreenImageState extends State<FullScreenImage> {
                       }
                     );
                   },
-                  icon: Icon(Icons.add_to_home_screen, color: Colors.black,),
+                  icon: Icon(Icons.add_to_home_screen, color: Colors.white,),
                   label: CustomText(text: '',),
                 ),
                 TextButton.icon(
                   onPressed: moreButton(),
-                  icon: Icon(Icons.more_horiz, color: Colors.black),
+                  icon: Icon(Icons.more_horiz, color: Colors.white),
                   label: CustomText(text: '',),
                 ),
               ],
             ),
           ),
+        ),
+        Align(
+          alignment: Alignment.bottomLeft,
+          child: FullScreenFla(isFavorite: isFavorite,),
+        ), */
+        Align(
+          alignment: Alignment.bottomRight,
+          child: ExpandableFab(isFavorite: isFavorite, image: widget.image),
         )
       ],
     );

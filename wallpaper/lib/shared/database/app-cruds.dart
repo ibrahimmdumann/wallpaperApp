@@ -15,13 +15,13 @@ class AppCruds {
   }
 
   Future isFavorite(Images image) async{
-    var finder = Finder(filter: Filter.matches('id', image.id));
+    var finder = Finder(filter: Filter.matches('image', image.image));
     return await _favoriteStore.findFirst(await _db, finder: finder);
   }
 
   Future delete(Images image) async {
     print('delete');
-    final finder = Finder(filter: Filter.byKey(image.id));
+    final finder = Finder(filter: Filter.matches('image', image.image));
     await _favoriteStore.delete(
       await _db,
       finder: finder,
@@ -39,7 +39,6 @@ class AppCruds {
     );
 
     return recordSnapshots.map((snapshot) {
-      print(snapshot);
       final favorites = Images.fromJson(snapshot.value);
       favorites.id = snapshot.key.toString();
       return favorites;

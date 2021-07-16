@@ -17,7 +17,7 @@ class Home extends StatelessWidget {
       child: ListView.separated(
         itemCount: images.length,
         itemBuilder: (_,i){
-          if(i==0 || (i % 4 == 0 && images.length>i+4)){
+          if(i==0 || i % 4 == 0){
             return ThumbImage(image: setImages(i, images));
           }
           return Container();
@@ -33,7 +33,12 @@ class Home extends StatelessWidget {
   }
 
   List<Images> setImages(int index, List<Images> images){
-    return images.sublist(index, index+4);
+    if(images.length >= index+4){
+      return images.sublist(index, index+4);
+    }
+    else{
+      return images.sublist(index, images.length);
+    }
   }
 
 }

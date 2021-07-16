@@ -12,7 +12,9 @@ class FavoriteManager extends Bloc<FavoriteEvent, List<Images>>{
   Stream<List<Images>> mapEventToState(event) async* {
     switch(event){
       case FavoriteEvent.GetFavorites:
-        List<Images> images = await _databaseService.getFavoriteList();
+        List<Images> images = [];
+        yield images.toList();
+        images = await _databaseService.getFavoriteList();
         yield images.toList();
         break;
       default:
