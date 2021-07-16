@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 
 class CustomImage extends StatelessWidget {
   String? url;
-  String? tag;
-  CustomImage({this.url, this.tag});
+  CustomImage({this.url});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
-        child: Image.network("$url", fit: BoxFit.cover),
+        child: FadeInImage(
+          image: NetworkImage("$url"),
+          placeholder: AssetImage("assets/images/loading.gif"),
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

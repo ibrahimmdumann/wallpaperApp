@@ -129,6 +129,7 @@ class _FullScreenImageState extends State<FullScreenImage> {
   }
 
   favoriteButton() async{
+    print('isfavorite: $isFavorite');
     if(isFavorite){
       await _appCruds.delete(widget.image);
     }

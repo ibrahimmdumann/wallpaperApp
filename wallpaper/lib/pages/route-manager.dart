@@ -14,10 +14,12 @@ class RouteManager extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: MyAppBar(scaffoldKey: _scaffoldKey,),
       drawer: MyDrawer(),
-      body: BlocBuilder<RouteBloc, Widget>(
-        builder: (context, widget){
-          return widget;
-        },
+      body: SafeArea(
+        child: BlocBuilder<RouteBloc, Widget>(
+          builder: (context, widget){
+            return widget;
+          },
+        ),
       ),
     );
   }

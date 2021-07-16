@@ -25,7 +25,7 @@ class ThumbImage extends StatelessWidget {
                     child: Container(
                       width: double.infinity,
                       padding: EdgeInsets.all(5),
-                      child: CustomImage(url: image[0].thumb, tag: image[0].id,)
+                      child: CustomImage(url: image[0].thumb)
                     ),
                   ),
                 ),
@@ -36,7 +36,7 @@ class ThumbImage extends StatelessWidget {
                     child: Container(
                       width: double.infinity,
                       padding: EdgeInsets.all(5),
-                      child: CustomImage(url: image[2].thumb, tag: image[2].id),
+                      child: CustomImage(url: image[2].thumb),
                     ),
                   ),
                 )
@@ -53,7 +53,7 @@ class ThumbImage extends StatelessWidget {
                     child: Container(
                       width: double.infinity,
                       padding: EdgeInsets.all(5),
-                      child: CustomImage(url: image[1].thumb, tag: image[1].id)
+                      child: CustomImage(url: image[1].thumb)
                     ),
                   ),
                 ),
@@ -64,7 +64,7 @@ class ThumbImage extends StatelessWidget {
                     child: Container(
                       width: double.infinity,
                       padding: EdgeInsets.all(5),
-                      child: CustomImage(url: image[3].thumb, tag: image[3].id)
+                      child: CustomImage(url: image[3].thumb)
                     ),
                   ),
                 ),

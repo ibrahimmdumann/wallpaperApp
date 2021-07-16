@@ -10,6 +10,7 @@ class AppCruds {
   Future get _db async => await AppDatabase.instance.openDatabase;
 
   Future insert(Images image) async {
+    print('insert');
     await _favoriteStore.add(await _db, image.toJson());
   }
 
@@ -19,6 +20,7 @@ class AppCruds {
   }
 
   Future delete(Images image) async {
+    print('delete');
     final finder = Finder(filter: Filter.byKey(image.id));
     await _favoriteStore.delete(
       await _db,
@@ -37,6 +39,7 @@ class AppCruds {
     );
 
     return recordSnapshots.map((snapshot) {
+      print(snapshot);
       final favorites = Images.fromJson(snapshot.value);
       favorites.id = snapshot.key.toString();
       return favorites;
