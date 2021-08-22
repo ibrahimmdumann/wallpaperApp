@@ -48,34 +48,33 @@ public class MainActivity extends FlutterActivity {
         new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL)
             .setMethodCallHandler((call, result) -> {
               if (call.method.equals("sethomeWallpaper")) {
-                
-               sethomewall();
-    
+                final String url=call.argument("url");
+               
+                sethomewall(url);
+                    
               }
     
             });
       }
-  public void sethomewall() {
-    String imageURL= "https://enestekle.com/ataturk_wallpaper/upload/189698_1542483413.jpeg";
-    bitmap=null;
-  new GetImageFromUrl().execute(imageURL);
+  public void sethomewall(String imageURL) {
+
+new GetImageFromUrl().execute(imageURL);
+   
   WallpaperManager manager = WallpaperManager.getInstance(getApplicationContext());
   do {
-      if(bitmap != null){
-
-      }
+    if(bitmap != null){
+        try {
+            System.out.println("idris2," + bitmap);
+            manager.setBitmap(bitmap);
+            Toast.makeText(this, "Wallpaper set!", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
+        }
+    }
   }
   while (bitmap == null);
-  if(bitmap != null){
-      try {
-          System.out.println("idris2," + bitmap);
-          manager.setBitmap(bitmap);
-          Toast.makeText(this, "Wallpaper set!", Toast.LENGTH_SHORT).show();
-      } catch (IOException e) {
-          Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
-      }
-  }
-
+  
+  bitmap=null;
 }
 }
 class GetImageFromUrl extends AsyncTask<String, Void, Bitmap> {

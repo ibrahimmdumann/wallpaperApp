@@ -149,7 +149,7 @@ class _FullScreenImageState extends State<FullScreenImage> {
 
   optionMenu(String text, int duration) {
     return GestureDetector(
-      onTap: () => Setwallpaper.sethomescreen(),
+      onTap: () => null,
       child: Container(
         child: CustomSlideTransition(
           text: '$text',
@@ -171,5 +171,7 @@ class _FullScreenImageState extends State<FullScreenImage> {
     });
   }
 
-  moreButton() {}
+  moreButton() {
+    print("burayada geldin ya");
+  }
 }
