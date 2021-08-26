@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wallpaper/pages/home/home-models.dart';
+import 'package:wallpaper/pages/home/home-setwallpaper.dart';
 import 'package:wallpaper/pages/home/widgets/animation-fab/action-button.dart';
 import 'package:wallpaper/pages/home/widgets/animation-fab/fab-widget.dart';
 import 'package:wallpaper/pages/home/widgets/animation-fab/options.dart';
@@ -9,14 +10,13 @@ import 'package:wallpaper/shared/database/app-cruds.dart';
 class ExpandableFab extends StatefulWidget {
   bool isFavorite;
   Images image;
-  ExpandableFab ({required this.isFavorite, required this.image});
+  ExpandableFab({required this.isFavorite, required this.image});
 
   @override
   _ExpandableFabState createState() => _ExpandableFabState();
 }
 
 class _ExpandableFabState extends State<ExpandableFab> {
-
   AppCruds _appCruds = AppCruds();
 
   @override
@@ -26,32 +26,38 @@ class _ExpandableFabState extends State<ExpandableFab> {
       children: [
         ActionButton(
           onPressed: () => favoriteButton(),
-          icon: Icon(widget.isFavorite ? Icons.favorite : Icons.favorite_border_outlined, size: FabOptions().fabIconSize),
+          icon: Icon(
+              widget.isFavorite
+                  ? Icons.favorite
+                  : Icons.favorite_border_outlined,
+              size: FabOptions().fabIconSize),
         ),
         ActionButton(
           onPressed: () {
             showModalBottomSheet(
-              backgroundColor: Colors.transparent.withOpacity(0.5),
-              isScrollControlled: true,
-              context: context,
-              builder: (context){
-                return Container(
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: optionMenu('Main Screen', 950),
-                      ),
-                      Expanded(
-                        child: optionMenu('Lock Screen', 1150),
-                      ),
-                      Expanded(
-                        child: optionMenu('Both Screen', 1350),
-                      ),
-                    ],
-                  ),
-                );
-              }
-            );
+                backgroundColor: Colors.transparent.withOpacity(0.5),
+                isScrollControlled: true,
+                context: context,
+                builder: (context) {
+                  return Container(
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: optionMenu(
+                              'Main Screen', 950, widget.image.image),
+                        ),
+                        Expanded(
+                          child: optionMenu(
+                              'Lock Screen', 1150, widget.image.image),
+                        ),
+                        Expanded(
+                          child: optionMenu(
+                              'Both Screen', 1350, widget.image.image),
+                        ),
+                      ],
+                    ),
+                  );
+                });
           },
           icon: Icon(Icons.insert_photo, size: FabOptions().fabIconSize),
         ),
@@ -63,18 +69,28 @@ class _ExpandableFabState extends State<ExpandableFab> {
     );
   }
 
-  optionMenu(String text, int duration){
+  optionMenu(String text, int duration, String ourl) {
     return Container(
-      child: CustomSlideTransition(text: '$text', duration: duration,),
+      child: GestureDetector(
+        child: CustomSlideTransition(
+          text: '$text',
+          duration: duration,
+        ),
+        onTap: () {
+          String adress =
+              "https://idriscelebi.com/eviller_scorpion/upload/" + ourl;
+          Setwallpaper.sethomescreen(adress);
+          Navigator.pop(context);
+        },
+      ),
     );
   }
 
-  favoriteButton() async{
+  favoriteButton() async {
     print('isfavorite: ${widget.isFavorite}');
-    if(widget.isFavorite){
+    if (widget.isFavorite) {
       await _appCruds.delete(widget.image);
-    }
-    else{
+    } else {
       await _appCruds.insert(widget.image);
     }
     setState(() {
@@ -82,5 +98,5 @@ class _ExpandableFabState extends State<ExpandableFab> {
     });
   }
 
-  moreButton(){}
+  moreButton() {}
 }

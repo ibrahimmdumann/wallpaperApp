@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-class FullScreenFla extends StatefulWidget  {
+// ignore: must_be_immutable
+class FullScreenFla extends StatefulWidget {
   bool isFavorite;
   FullScreenFla({required this.isFavorite});
 
@@ -8,8 +9,8 @@ class FullScreenFla extends StatefulWidget  {
   _FullScreenFlaState createState() => _FullScreenFlaState();
 }
 
-class _FullScreenFlaState extends State<FullScreenFla> with SingleTickerProviderStateMixin {
-
+class _FullScreenFlaState extends State<FullScreenFla>
+    with SingleTickerProviderStateMixin {
   bool isOpened = false;
   late AnimationController _animationController;
   late Animation<Color?> _animateColor;
@@ -25,7 +26,8 @@ class _FullScreenFlaState extends State<FullScreenFla> with SingleTickerProvider
           ..addListener(() {
             setState(() {});
           });
-    _animateIcon = Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
+    _animateIcon =
+        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
     _animateColor = ColorTween(
       begin: Colors.blue,
       end: Colors.red,
@@ -56,6 +58,7 @@ class _FullScreenFlaState extends State<FullScreenFla> with SingleTickerProvider
     _animationController.dispose();
     super.dispose();
   }
+
   animate() {
     if (!isOpened) {
       _animationController.forward();
@@ -76,7 +79,6 @@ class _FullScreenFlaState extends State<FullScreenFla> with SingleTickerProvider
       ),
     );
   }
-
 
   Widget more() {
     return new Container(
@@ -103,7 +105,8 @@ class _FullScreenFlaState extends State<FullScreenFla> with SingleTickerProvider
       child: FloatingActionButton(
         onPressed: null,
         tooltip: 'Favorite',
-        child: Icon(widget.isFavorite ? Icons.favorite : Icons.favorite_outlined),
+        child:
+            Icon(widget.isFavorite ? Icons.favorite : Icons.favorite_outlined),
       ),
     );
   }

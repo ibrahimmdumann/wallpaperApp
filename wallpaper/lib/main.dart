@@ -9,7 +9,7 @@ import 'package:wallpaper/pages/route-bloc.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
-  
+
   runApp(MyApp());
 }
 
@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'WallpaperApp',
       theme: ThemeData(
         primarySwatch: Colors.blue,
