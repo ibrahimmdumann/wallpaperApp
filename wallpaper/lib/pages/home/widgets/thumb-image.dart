@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wallpaper/pages/home/home-models.dart';
 import 'package:wallpaper/pages/home/widgets/fullscreen-image.dart';
 import 'package:wallpaper/pages/home/widgets/fullscreen-page.dart';
+import 'package:wallpaper/pages/home/widgets/set-process-bloc.dart';
 import 'package:wallpaper/shared/custom-widgets/custom-image.dart';
 
 class ThumbImage extends StatelessWidget {
@@ -79,7 +81,10 @@ class ThumbImage extends StatelessWidget {
 
   void fullscreenNavigator(BuildContext context, Images image){
     Navigator.push(context, MaterialPageRoute(
-      builder: (context) => FullscreenPage(image: image,))
+      builder: (context) => BlocProvider(
+        create: (context) => SetProcessBloc(),
+        child: FullscreenPage(image: image,),
+      ))
     );
   }
 }

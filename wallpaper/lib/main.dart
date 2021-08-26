@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider(create: (context) => HomeManager()),
           BlocProvider(create: (context) => RouteBloc()),
-          BlocProvider(create: (context) => FavoriteManager())
+          BlocProvider(create: (context) => FavoriteManager()),
         ],
         child: BeforeStarting(),
       ),

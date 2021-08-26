@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wallpaper/pages/home/home-models.dart';
+import 'package:wallpaper/pages/home/home-setwallpaper.dart';
 import 'package:wallpaper/pages/home/widgets/fullscreen-image.dart';
+import 'package:wallpaper/pages/home/widgets/set-process-bloc.dart';
 import 'package:wallpaper/shared/custom-widgets/custom-slide-trans.dart';
 import 'package:wallpaper/shared/custom-widgets/custom-text.dart';
 import 'package:wallpaper/shared/database/app-cruds.dart';
@@ -33,6 +36,8 @@ class _FullscreenPageState extends State<FullscreenPage> {
   
   @override
   Widget build(BuildContext context) {
+    final SetProcessBloc _setProcessBloc = BlocProvider.of<SetProcessBloc>(context);
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -50,8 +55,18 @@ class _FullscreenPageState extends State<FullscreenPage> {
         ],
         centerTitle: true,
       ),
-      body: Center(
-        child: FullScreenImage(image: widget.image,),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Center(
+            child: FullScreenImage(image: widget.image,),
+          ),
+          BlocBuilder<SetProcessBloc, Widget>(
+            builder: (context, widget){
+              return Center(child: widget);
+            },
+          )
+        ],
       ),
       bottomNavigationBar: Container(
         height: 90,
@@ -71,16 +86,25 @@ class _FullscreenPageState extends State<FullscreenPage> {
                         child: Column(
                           children: [
                             Expanded(
-                              child: optionMenu(
-                                  'Main Screen', 650, widget.image.image),
+                              child: GestureDetector(
+                                child: optionMenu(
+                                    'Main Screen', 650, widget.image.orjImg, _setProcessBloc),
+                                onTap: (){
+                                  print('girdi');
+                                  Navigator.pop(context);
+                                  print('kapandı');
+                                  _setProcessBloc.add(MainScreen(url: widget.image.orjImg));
+                                  print('yapıldı');
+                                },
+                              ),
                             ),
                             Expanded(
                               child: optionMenu(
-                                  'Lock Screen', 850, widget.image.image),
+                                  'Lock Screen', 850, widget.image.orjImg, _setProcessBloc),
                             ),
                             Expanded(
                               child: optionMenu(
-                                  'Both Screen', 1050, widget.image.image),
+                                  'Both Screen', 1050, widget.image.orjImg, _setProcessBloc),
                             ),
                           ],
                         ),
@@ -110,14 +134,10 @@ class _FullscreenPageState extends State<FullscreenPage> {
     });
   }
 
-  optionMenu(String text, int duration, String ourl) {
-    return Container(
-      child: GestureDetector(
-        child: CustomSlideTransition(
-          text: '$text',
-          duration: duration,
-        ),
-      ),
+  Widget optionMenu(String text, int duration, String url, SetProcessBloc process) {
+    return CustomSlideTransition(
+      text: '$text',
+      duration: duration,
     );
   }
 

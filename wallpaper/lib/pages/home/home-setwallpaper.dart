@@ -1,34 +1,13 @@
 import 'package:flutter/services.dart';
 
 class Setwallpaper {
-  static const platformMethodChannel =
-      const MethodChannel('heartbeat.fritz.ai/native');
-  String nativeMessage = '';
-  static Future<Null> sethomescreen(String imageUrl) async {
-    print("girdin aslında");
-    String _message;
+  static const platformMethodChannel = const MethodChannel('setWallpaperProcess');
 
-    try {
-      final String result =
-          await platformMethodChannel.invokeMethod('sethomeWallpaper', {
-        "url": imageUrl,
-      });
-      _message = result;
-    } on PlatformException catch (e) {
-      _message = "Can't do native stuff ${e.message}.";
-    }
+  Future<bool> sethomescreen(String url) async {
+    return await platformMethodChannel.invokeMethod('sethomeWallpaper', {"url": url});
   }
 
-  Future<Null> setlockscreen(String url) async {
-    String _message;
-    try {
-      final String result =
-          await platformMethodChannel.invokeMethod('setlockWallpaper');
-      _message = result;
-    } on PlatformException catch (e) {
-      _message = "Can't do native stuff ${e.message}.";
-    }
-
-    nativeMessage = _message;
+  Future<bool> setlockscreen(String url) async {
+    return await await platformMethodChannel.invokeMethod('setlockWallpaper', {"url": url});
   }
 }
