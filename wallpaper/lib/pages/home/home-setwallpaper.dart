@@ -1,13 +1,21 @@
 import 'package:flutter/services.dart';
 
 class Setwallpaper {
-  static const platformMethodChannel = const MethodChannel('setWallpaperProcess');
+  static const platformMethodChannel =
+      const MethodChannel('setWallpaperProcess');
 
-  Future<bool> sethomescreen(String url) async {
-    return await platformMethodChannel.invokeMethod('sethomeWallpaper', {"url": url});
+  Future<bool> setHomeScreen(String url) async {
+    return await platformMethodChannel
+        .invokeMethod('setHomeWallpaper', {"url": url});
   }
 
-  Future<bool> setlockscreen(String url) async {
-    return await await platformMethodChannel.invokeMethod('setlockWallpaper', {"url": url});
+  Future<bool> setLockScreen(String url) async {
+    return await await platformMethodChannel
+        .invokeMethod('setLockWallpaper', {"url": url});
+  }
+
+  Future<bool> setBothScreen(String url) async {
+    return await await platformMethodChannel
+        .invokeMethod('setBothWallpaper', {"url": url});
   }
 }
