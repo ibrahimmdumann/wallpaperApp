@@ -41,13 +41,14 @@ public class MainActivity extends FlutterActivity {
           manager.setBitmap(bitmap);
           a.cancel(true);
           isSucces = true;
+          bitmap=null;
         } catch (IOException e) {
           isSucces = false;
         }
       }
     }
-    while (bitmap == null);
-    bitmap=null;
+    while (!a.isCancelled());
+   
     return isSucces;
   }
 }
@@ -71,5 +72,6 @@ class GetImageFromUrl extends AsyncTask<String, Void, Bitmap> {
   @Override
   protected void onPostExecute(Bitmap bitmap){
     super.onPostExecute(bitmap);
+   
   }
 }
