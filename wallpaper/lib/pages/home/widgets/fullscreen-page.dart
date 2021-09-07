@@ -19,7 +19,7 @@ class FullscreenPage extends StatefulWidget {
 class _FullscreenPageState extends State<FullscreenPage> {
   AppCruds _appCruds = AppCruds();
   bool isFavorite = false;
-  
+
   @override
   void initState() {
     super.initState();
@@ -33,10 +33,11 @@ class _FullscreenPageState extends State<FullscreenPage> {
       isFavorite = a != null;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    final SetProcessBloc _setProcessBloc = BlocProvider.of<SetProcessBloc>(context);
+    final SetProcessBloc _setProcessBloc =
+        BlocProvider.of<SetProcessBloc>(context);
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -45,7 +46,10 @@ class _FullscreenPageState extends State<FullscreenPage> {
         backgroundColor: Colors.transparent,
         actions: [
           IconButton(
-            icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_outline, color: Colors.white,),
+            icon: Icon(
+              isFavorite ? Icons.favorite : Icons.favorite_outline,
+              color: Colors.white,
+            ),
             onPressed: () => favoriteButton(),
           ),
           IconButton(
@@ -59,10 +63,12 @@ class _FullscreenPageState extends State<FullscreenPage> {
         fit: StackFit.expand,
         children: [
           Center(
-            child: FullScreenImage(image: widget.image,),
+            child: FullScreenImage(
+              image: widget.image,
+            ),
           ),
           BlocBuilder<SetProcessBloc, Widget>(
-            builder: (context, widget){
+            builder: (context, widget) {
               return Center(child: widget);
             },
           )
@@ -75,7 +81,11 @@ class _FullscreenPageState extends State<FullscreenPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              icon: Icon(Icons.insert_photo, color: Colors.white, size: 35,),
+              icon: Icon(
+                Icons.insert_photo,
+                color: Colors.white,
+                size: 35,
+              ),
               onPressed: () {
                 showModalBottomSheet(
                     backgroundColor: Colors.transparent.withOpacity(0.5),
@@ -87,24 +97,45 @@ class _FullscreenPageState extends State<FullscreenPage> {
                           children: [
                             Expanded(
                               child: GestureDetector(
-                                child: optionMenu(
-                                    'Main Screen', 650, widget.image.orjImg, _setProcessBloc),
-                                onTap: (){
+                                child: optionMenu('Main Screen', 650,
+                                    widget.image.orjImg, _setProcessBloc),
+                                onTap: () {
                                   print('girdi');
                                   Navigator.pop(context);
                                   print('kapandı');
-                                  _setProcessBloc.add(MainScreen(url: widget.image.orjImg));
+                                  _setProcessBloc.add(
+                                      MainScreen(url: widget.image.orjImg));
                                   print('yapıldı');
                                 },
                               ),
                             ),
                             Expanded(
-                              child: optionMenu(
-                                  'Lock Screen', 850, widget.image.orjImg, _setProcessBloc),
+                              child: GestureDetector(
+                                child: optionMenu('Lock Screen', 850,
+                                    widget.image.orjImg, _setProcessBloc),
+                                onTap: () {
+                                  print('girdi');
+                                  Navigator.pop(context);
+                                  print('kapandı');
+                                  _setProcessBloc.add(
+                                      LockScreen(url: widget.image.orjImg));
+                                  print('yapıldı');
+                                },
+                              ),
                             ),
                             Expanded(
-                              child: optionMenu(
-                                  'Both Screen', 1050, widget.image.orjImg, _setProcessBloc),
+                              child: GestureDetector(
+                                child: optionMenu('Both Screen', 1050,
+                                    widget.image.orjImg, _setProcessBloc),
+                                onTap: () {
+                                  print('girdi');
+                                  Navigator.pop(context);
+                                  print('kapandı');
+                                  _setProcessBloc.add(
+                                      BothScreen(url: widget.image.orjImg));
+                                  print('yapıldı');
+                                },
+                              ),
                             ),
                           ],
                         ),
@@ -134,27 +165,31 @@ class _FullscreenPageState extends State<FullscreenPage> {
     });
   }
 
-  Widget optionMenu(String text, int duration, String url, SetProcessBloc process) {
+  Widget optionMenu(
+      String text, int duration, String url, SetProcessBloc process) {
     return CustomSlideTransition(
       text: '$text',
       duration: duration,
     );
   }
 
-  moreMenu(BuildContext context, Images image){
+  moreMenu(BuildContext context, Images image) {
     showModalBottomSheet(
-      backgroundColor: Colors.transparent.withOpacity(0.5),
-      isScrollControlled: true,
-      context: context,
-      builder: (context){
-        return Container(
-          height: MediaQuery.of(context).size.height/3,
-          color: Colors.black.withOpacity(0.5),
-          child: Center(
-            child: CustomText(text: image.id, color: Colors.white, fontWeight: FontWeight.bold,),
-          ),
-        );
-      }
-    );
+        backgroundColor: Colors.transparent.withOpacity(0.5),
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return Container(
+            height: MediaQuery.of(context).size.height / 3,
+            color: Colors.black.withOpacity(0.5),
+            child: Center(
+              child: CustomText(
+                text: image.id,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          );
+        });
   }
 }

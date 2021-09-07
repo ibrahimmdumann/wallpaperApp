@@ -10,27 +10,43 @@ import android.os.AsyncTask;
 import java.io.IOException;
 import java.io.InputStream;
 
-
+enum Screen {
+  Home,
+  Lock,
+  Both
+}
 
 public class MainActivity extends FlutterActivity {
   private static final String CHANNEL = "setWallpaperProcess";
   public static Bitmap bitmap;
+  
 
+  
   @Override
   public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
     super.configureFlutterEngine(flutterEngine);
     new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL)
             .setMethodCallHandler(
                     (call, result) -> {
-                      if (call.method.equals("sethomeWallpaper")) {
+                      if (call.method.equals("setHomeWallpaper")) 
+                      {
                         final String url=call.argument("url");
-                        result.success(sethomewall(url));
-
+                        result.success(setWallpaper(url,Screen.Home));
+                      }
+                      else if(call.method.equals("setLockWallpaper")) 
+                      {
+                        final String url=call.argument("url");
+                        result.success(setWallpaper(url,Screen.Lock));
+                      }
+                      else 
+                      {
+                        final String url=call.argument("url");
+                        result.success(setWallpaper(url,Screen.Both));
                       }
                     }
             );
   }
-  public boolean sethomewall(String imageURL) {
+  public boolean setWallpaper(String imageURL,Screen type ) {
     boolean isSucces = false;
     GetImageFromUrl a = new GetImageFromUrl();
     a.execute(imageURL);
@@ -38,7 +54,19 @@ public class MainActivity extends FlutterActivity {
     do {
       if(bitmap != null){
         try {
-          manager.setBitmap(bitmap);
+          switch (type) {
+            case Home:
+             { manager.setBitmap(bitmap,null, false, WallpaperManager.FLAG_SYSTEM);
+              break;}
+            case Lock:
+             { manager.setBitmap(bitmap,null, false, WallpaperManager.FLAG_LOCK);
+              break;
+             }
+            default:
+             { manager.setBitmap(bitmap,null, false, WallpaperManager.FLAG_LOCK | WallpaperManager.FLAG_SYSTEM );
+              break;
+             }
+          }
           a.cancel(true);
           isSucces = true;
           bitmap=null;
