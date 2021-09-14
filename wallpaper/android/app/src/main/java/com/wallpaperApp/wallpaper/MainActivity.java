@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import java.io.IOException;
 import java.io.InputStream;
+import android.media.MediaPlayer;
 
 enum Screen {
   Home,
@@ -28,25 +29,25 @@ public class MainActivity extends FlutterActivity {
     new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL)
             .setMethodCallHandler(
                     (call, result) -> {
+                      final String urlVoice=call.argument("urlVoice");
+                      final String url=call.argument("url");
+                      System.out.print(urlVoice);
                       if (call.method.equals("setHomeWallpaper")) 
-                      {
-                        final String url=call.argument("url");
-                        result.success(setWallpaper(url,Screen.Home));
+                      {  
+                        result.success(setWallpaper(url, Screen.Home, urlVoice));
                       }
                       else if(call.method.equals("setLockWallpaper")) 
                       {
-                        final String url=call.argument("url");
-                        result.success(setWallpaper(url,Screen.Lock));
+                        result.success(setWallpaper(url, Screen.Lock, urlVoice));
                       }
                       else 
                       {
-                        final String url=call.argument("url");
-                        result.success(setWallpaper(url,Screen.Both));
+                        result.success(setWallpaper(url, Screen.Both, urlVoice));
                       }
                     }
             );
   }
-  public boolean setWallpaper(String imageURL,Screen type ) {
+  public boolean setWallpaper(String imageURL,Screen type,String urlVoice) {
     boolean isSucces = false;
     GetImageFromUrl a = new GetImageFromUrl();
     a.execute(imageURL);
@@ -69,6 +70,13 @@ public class MainActivity extends FlutterActivity {
           }
           a.cancel(true);
           isSucces = true;
+          System.out.print(urlVoice);
+            if(urlVoice != null)
+            {
+              Playsong p = new Playsong();
+              p.playVoice(urlVoice);
+
+            }
           bitmap=null;
         } catch (IOException e) {
           isSucces = false;
@@ -102,4 +110,29 @@ class GetImageFromUrl extends AsyncTask<String, Void, Bitmap> {
     super.onPostExecute(bitmap);
    
   }
+}
+class Playsong{
+
+ void playVoice(String url)
+  {
+   
+  MediaPlayer mediaPlayer = new MediaPlayer();
+
+    try {
+        mediaPlayer.setDataSource(url);
+    } catch (IOException e) {
+        e.printStackTrace();
+       
+    }
+    try {
+        mediaPlayer.prepare(); // might take long! (for buffering, etc)
+    } catch (IOException e) {
+        e.printStackTrace();
+        
+      }
+    mediaPlayer.start();
+   
+
+  }
+
 }
