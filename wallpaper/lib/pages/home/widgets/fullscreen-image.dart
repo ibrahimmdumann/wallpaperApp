@@ -26,15 +26,18 @@ class FullScreenImage extends StatelessWidget {
           ),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Image.network(
-              '${image.orjImg}',
-              fit: BoxFit.cover,
-              loadingBuilder: (context, child, event) {
-                if (event == null) {
-                  return child;
-                }
-                return Center(child: CircularProgressIndicator());
-              },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.network(
+                '${image.orjImg}',
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, event) {
+                  if (event == null) {
+                    return child;
+                  }
+                  return Center(child: CircularProgressIndicator());
+                },
+              ),
             ),
           ),
         ),

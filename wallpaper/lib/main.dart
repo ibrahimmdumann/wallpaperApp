@@ -6,6 +6,8 @@ import 'package:wallpaper/pages/favorite/favorite-manager.dart';
 import 'package:wallpaper/pages/home/home-manager.dart';
 import 'package:wallpaper/pages/route-bloc.dart';
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
@@ -31,6 +33,7 @@ class MyApp extends StatelessWidget {
         ],
         child: BeforeStarting(),
       ),
+      navigatorKey: navigatorKey,
     );
   }
 }

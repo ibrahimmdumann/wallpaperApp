@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wallpaper/pages/home/home-models.dart';
-import 'package:wallpaper/pages/home/home-setwallpaper.dart';
 import 'package:wallpaper/pages/home/widgets/fullscreen-image.dart';
 import 'package:wallpaper/pages/home/widgets/set-process-bloc.dart';
+import 'package:wallpaper/shared/custom-widgets/custom-alert.dart';
 import 'package:wallpaper/shared/custom-widgets/custom-slide-trans.dart';
 import 'package:wallpaper/shared/custom-widgets/custom-text.dart';
 import 'package:wallpaper/shared/database/app-cruds.dart';
@@ -100,12 +100,8 @@ class _FullscreenPageState extends State<FullscreenPage> {
                                 child: optionMenu('Main Screen', 650,
                                     widget.image.orjImg, _setProcessBloc),
                                 onTap: () {
-                                  print('girdi');
-                                  Navigator.pop(context);
-                                  print('kapandı');
                                   _setProcessBloc.add(
                                       MainScreen(url: widget.image.orjImg));
-                                  print('yapıldı');
                                 },
                               ),
                             ),
@@ -114,12 +110,8 @@ class _FullscreenPageState extends State<FullscreenPage> {
                                 child: optionMenu('Lock Screen', 850,
                                     widget.image.orjImg, _setProcessBloc),
                                 onTap: () {
-                                  print('girdi');
-                                  Navigator.pop(context);
-                                  print('kapandı');
                                   _setProcessBloc.add(
                                       LockScreen(url: widget.image.orjImg));
-                                  print('yapıldı');
                                 },
                               ),
                             ),
@@ -128,12 +120,8 @@ class _FullscreenPageState extends State<FullscreenPage> {
                                 child: optionMenu('Both Screen', 1050,
                                     widget.image.orjImg, _setProcessBloc),
                                 onTap: () {
-                                  print('girdi');
-                                  Navigator.pop(context);
-                                  print('kapandı');
                                   _setProcessBloc.add(
                                       BothScreen(url: widget.image.orjImg));
-                                  print('yapıldı');
                                 },
                               ),
                             ),
@@ -157,8 +145,10 @@ class _FullscreenPageState extends State<FullscreenPage> {
   favoriteButton() async {
     if (isFavorite) {
       await _appCruds.delete(widget.image);
+      customAlert('Favorilerden çıkarıldı', 'Favori');
     } else {
       await _appCruds.insert(widget.image);
+      customAlert('Favorilere Eklendi', 'Favori');
     }
     setState(() {
       isFavorite = !isFavorite;
