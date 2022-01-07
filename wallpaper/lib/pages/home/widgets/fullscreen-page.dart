@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wallpaper/pages/home/home-models.dart';
 import 'package:wallpaper/pages/home/widgets/fullscreen-image.dart';
+import 'package:wallpaper/pages/home/widgets/only-full-image.dart';
 import 'package:wallpaper/pages/home/widgets/set-process-bloc.dart';
+import 'package:wallpaper/shared/custom-widgets/custom-ads.dart';
 import 'package:wallpaper/shared/custom-widgets/custom-alert.dart';
 import 'package:wallpaper/shared/custom-widgets/custom-slide-trans.dart';
 import 'package:wallpaper/shared/custom-widgets/custom-text.dart';
@@ -19,6 +21,9 @@ class FullscreenPage extends StatefulWidget {
 class _FullscreenPageState extends State<FullscreenPage> {
   AppCruds _appCruds = AppCruds();
   bool isFavorite = false;
+
+  PageController controller=PageController(initialPage: 0, viewportFraction: 0.5);
+  double value = 1;
 
   @override
   void initState() {
@@ -39,54 +44,73 @@ class _FullscreenPageState extends State<FullscreenPage> {
     final SetProcessBloc _setProcessBloc =
         BlocProvider.of<SetProcessBloc>(context);
 
+    var h = MediaQuery.of(context).size.height-90;
+
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        actions: [
-          IconButton(
-            icon: Icon(
-              isFavorite ? Icons.favorite : Icons.favorite_outline,
-              color: Colors.white,
-            ),
-            onPressed: () => favoriteButton(),
-          ),
-          IconButton(
-            icon: Icon(Icons.more_horiz, color: Colors.white),
-            onPressed: () => moreMenu(context, widget.image),
-          )
-        ],
         centerTitle: true,
       ),
-      body: Stack(
-        fit: StackFit.expand,
+      body: Column(
         children: [
-          Center(
-            child: FullScreenImage(
-              image: widget.image,
-            ),
-          ),
-          BlocBuilder<SetProcessBloc, Widget>(
-            builder: (context, widget) {
-              return Center(child: widget);
-            },
-          )
-        ],
-      ),
-      bottomNavigationBar: Container(
-        height: 90,
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(
-              icon: Icon(
-                Icons.insert_photo,
-                color: Colors.white,
-                size: 35,
-              ),
-              onPressed: () {
+          Expanded(
+            flex: 5,
+            child: Column(
+              children: [
+                Expanded(
+                  child: PageView.builder(
+                    controller: controller,
+                    itemCount: 5,
+                    itemBuilder: (context,i){
+                      return AnimatedBuilder(
+                        animation: controller,
+                        builder:(context, widget) {
+                          value = 1;
+                          if(controller.position.haveDimensions){
+                            value=controller.page!-i;
+                            value=(1-(value.abs() * 0.3)).clamp(0.0, 1.0);
+                          }
+                          return Center(
+                            child: SizedBox(
+                              height: value*((h/2)),
+                              child: widget,
+                            ),
+                          );
+                        },
+                        child: GestureDetector(
+                          child: Hero(
+                            tag: '${widget.image.id}$i',
+                            child: Image.network(widget.image.orjImg)
+                          ),
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (_) => OnlyFullImage(image: widget.image, tag: '${widget.image.id}$i')
+                            ));
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                GestureDetector(
+                  child: Container(
+                    padding: EdgeInsets.only(top: 5, bottom: 5, right: 1),
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                      height: 40,
+                      width: 60,
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(5),
+                          bottomLeft: Radius.circular(5),
+                          bottomRight: Radius.circular(15)
+                        )
+                      ),
+                      child: Icon(Icons.wallpaper, color: Colors.white,),
+                    )
+                  ),
+                  onTap: () {
                 showModalBottomSheet(
                     backgroundColor: Colors.transparent.withOpacity(0.5),
                     isScrollControlled: true,
@@ -130,14 +154,35 @@ class _FullscreenPageState extends State<FullscreenPage> {
                       );
                     });
               },
+                )
+              ],
             ),
-            SizedBox(width: 20),
-            IconButton(
-              icon: Icon(Icons.download, color: Colors.white, size: 35),
-              onPressed: null,
-            )
-          ],
-        ),
+          ),
+          Container(
+            child: CustomAds()
+          ),
+          Expanded(
+            flex: 3,
+            child: GridView.builder(
+              primary: false,
+              shrinkWrap: true,
+              itemCount: 12,
+              itemBuilder: (_,i){
+                return Container(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Image.network(widget.image.thumb),
+                  )
+                );
+              },
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 5,
+                crossAxisSpacing: 5,
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -14,7 +14,6 @@ class Favorite extends StatelessWidget {
 
     return BlocBuilder<FavoriteManager, List<Images>>(
       builder: (context, images) {
-        print(images.length);
         return Container(
           margin: EdgeInsets.only(left: 5, right: 5),
           child: ListView.separated(

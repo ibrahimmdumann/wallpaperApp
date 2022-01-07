@@ -33,10 +33,14 @@ class _CustomAdsState extends State<CustomAds> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      //margin: EdgeInsets.only(left:5, right: 5),
       alignment: Alignment.center,
       width: myBanner.size.width.toDouble(),
       height: myBanner.size.height.toDouble(),
-      child: AdWidget(ad: myBanner),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(0),
+        child: AdWidget(ad: myBanner),
+      )
     );
   }
 }

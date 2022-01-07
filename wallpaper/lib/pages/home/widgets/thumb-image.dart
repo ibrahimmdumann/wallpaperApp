@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wallpaper/pages/home/home-models.dart';
-import 'package:wallpaper/pages/home/widgets/fullscreen-image.dart';
 import 'package:wallpaper/pages/home/widgets/fullscreen-page.dart';
 import 'package:wallpaper/pages/home/widgets/set-process-bloc.dart';
 import 'package:wallpaper/shared/custom-widgets/custom-image.dart';

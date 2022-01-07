@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wallpaper/core/app-bar.dart';
+import 'package:wallpaper/core/bottom-bar.dart';
 import 'package:wallpaper/core/drawer.dart';
 import 'package:wallpaper/pages/route-bloc.dart';
 
@@ -12,8 +13,8 @@ class RouteManager extends StatelessWidget {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.white,
-      appBar: MyAppBar(scaffoldKey: _scaffoldKey,),
-      drawer: MyDrawer(),
+      //appBar: MyAppBar(scaffoldKey: _scaffoldKey,),
+      //drawer: MyDrawer(),
       body: SafeArea(
         child: BlocBuilder<RouteBloc, Widget>(
           builder: (context, widget){
@@ -21,6 +22,7 @@ class RouteManager extends StatelessWidget {
           },
         ),
       ),
+      bottomNavigationBar: BottomBar(),
     );
   }
 }

@@ -5,13 +5,14 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
             CircularProgressIndicator(),
-            Text('Loading')
+            SizedBox(width: 10),
+            Text('Yalnızca bir sn.')
           ],
         ),
       ),
