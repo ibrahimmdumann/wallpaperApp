@@ -5,30 +5,34 @@ import 'package:wallpaper/pages/home/home-setwallpaper.dart';
 import 'package:wallpaper/shared/custom-widgets/custom-alert.dart';
 
 class SetProcessBloc extends Bloc<SetProcess, Widget> {
-  SetProcessBloc() : super(Container());
+  SetProcessBloc() : super(Container()) {
+    on<SetProcess>((event, emit) async {
+      Navigator.pop(navigatorKey.currentContext!);
+      switch (event.event) {
+        case ProcessEnum.MainScreen:
+          emit(CircularProgressIndicator());
+          var isOut = await _setwallpaper.setHomeScreen(event.value);
+          openAlert(isOut, 'Anasayfa');
+          emit(Container());
+          break;
+        case ProcessEnum.LockScreen:
+          emit(CircularProgressIndicator());
+          var isOut = await _setwallpaper.setLockScreen(event.value);
+          openAlert(isOut, 'Kilit Ekranı');
+          emit(Container());
+          break;
+        case ProcessEnum.BothScreen:
+          emit(CircularProgressIndicator());
+          var isOut = await _setwallpaper.setBothScreen(event.value);
+          openAlert(isOut, 'İki ekran');
+          emit(Container());
+          break;
+        default:
+      }
+    });
+  }
 
   Setwallpaper _setwallpaper = Setwallpaper();
-
-  @override
-  Stream<Widget> mapEventToState(event) async* {
-    Navigator.pop(navigatorKey.currentContext!);
-    if (event is MainScreen) {
-      yield CircularProgressIndicator();
-      var isOut = await _setwallpaper.setHomeScreen(event.url);
-      openAlert(isOut, 'Anasayfa');
-      yield Container();
-    } else if (event is LockScreen) {
-      yield CircularProgressIndicator();
-      var isOut = await _setwallpaper.setLockScreen(event.url);
-      openAlert(isOut, 'Kilit Ekranı');
-      yield Container();
-    } else if (event is BothScreen) {
-      yield CircularProgressIndicator();
-      var isOut = await _setwallpaper.setBothScreen(event.url);
-      openAlert(isOut, 'İki ekran');
-      yield Container();
-    }
-  }
 
   openAlert(bool isOut, String page){
     if(isOut){
@@ -40,19 +44,12 @@ class SetProcessBloc extends Bloc<SetProcess, Widget> {
   }
 }
 
-abstract class SetProcess {}
+class SetProcess {
+  ProcessEnum event;
+  dynamic value;
+  SetProcess._internal({required this.event, this.value});
 
-class MainScreen extends SetProcess {
-  String url;
-  MainScreen({required this.url});
+  static setEvent(ProcessEnum event, dynamic value) => SetProcess._internal(event: event, value: value);
 }
 
-class LockScreen extends SetProcess {
-  String url;
-  LockScreen({required this.url});
-}
-
-class BothScreen extends SetProcess {
-  String url;
-  BothScreen({required this.url});
-}
+enum ProcessEnum { MainScreen, LockScreen, BothScreen }

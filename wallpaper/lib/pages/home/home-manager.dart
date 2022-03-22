@@ -4,26 +4,26 @@ import 'package:wallpaper/pages/home/home-services.dart';
 import 'home-models.dart';
 
 class HomeManager extends Bloc<Event, States>{
-  HomeManager() : super(States.Loading);
+  HomeManager() : super(States.Loading) {
+    on<Event>((event, emit) async {
+      switch (event) {
+        case Event.GetImages:
+          emit(States.Loading);
+          materialWallpaper = await _imagesServices.getImages();
+          if(materialWallpaper.materialWallpaper.length>0){
+            emit(States.Loaded);
+          }
+          else{
+            emit(States.Error);
+          }
+          break;
+        default:
+      }
+    });
+  }
 
   ImagesServices _imagesServices = new ImagesServices();
   late MaterialWallpaper materialWallpaper;
-
-  @override
-  Stream<States> mapEventToState(event) async* {
-    switch(event){
-      case Event.GetImages:
-        yield States.Loading;
-        materialWallpaper = await _imagesServices.getImages();
-        if(materialWallpaper.materialWallpaper.length>0){
-          yield States.Loaded;
-        }
-        else{
-          yield States.Error;
-        }
-        break;
-    }
-  }
 
 }
 

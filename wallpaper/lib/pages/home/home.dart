@@ -8,9 +8,8 @@ import 'package:wallpaper/shared/custom-widgets/custom-ads.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final HomeManager homeManager = BlocProvider.of<HomeManager>(context);
 
-    var images = homeManager.materialWallpaper.materialWallpaper;
+    var images = context.read<HomeManager>().materialWallpaper.materialWallpaper;
 
     return Container(
       margin: EdgeInsets.only(left: 5, right: 5),

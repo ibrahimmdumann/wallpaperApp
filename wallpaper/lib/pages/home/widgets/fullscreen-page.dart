@@ -36,9 +36,6 @@ class _FullscreenPageState extends State<FullscreenPage> {
 
   @override
   Widget build(BuildContext context) {
-    final SetProcessBloc _setProcessBloc =
-        BlocProvider.of<SetProcessBloc>(context);
-
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -98,30 +95,27 @@ class _FullscreenPageState extends State<FullscreenPage> {
                             Expanded(
                               child: GestureDetector(
                                 child: optionMenu('Main Screen', 650,
-                                    widget.image.orjImg, _setProcessBloc),
+                                    widget.image.orjImg),
                                 onTap: () {
-                                  _setProcessBloc.add(
-                                      MainScreen(url: widget.image.orjImg));
+                                  context.read<SetProcessBloc>().add(SetProcess.setEvent(ProcessEnum.MainScreen, widget.image.orjImg));
                                 },
                               ),
                             ),
                             Expanded(
                               child: GestureDetector(
                                 child: optionMenu('Lock Screen', 850,
-                                    widget.image.orjImg, _setProcessBloc),
+                                    widget.image.orjImg),
                                 onTap: () {
-                                  _setProcessBloc.add(
-                                      LockScreen(url: widget.image.orjImg));
+                                  context.read<SetProcessBloc>().add(SetProcess.setEvent(ProcessEnum.LockScreen, widget.image.orjImg));
                                 },
                               ),
                             ),
                             Expanded(
                               child: GestureDetector(
                                 child: optionMenu('Both Screen', 1050,
-                                    widget.image.orjImg, _setProcessBloc),
+                                    widget.image.orjImg),
                                 onTap: () {
-                                  _setProcessBloc.add(
-                                      BothScreen(url: widget.image.orjImg));
+                                  context.read<SetProcessBloc>().add(SetProcess.setEvent(ProcessEnum.BothScreen, widget.image.orjImg));
                                 },
                               ),
                             ),
@@ -156,7 +150,7 @@ class _FullscreenPageState extends State<FullscreenPage> {
   }
 
   Widget optionMenu(
-      String text, int duration, String url, SetProcessBloc process) {
+      String text, int duration, String url) {
     return CustomSlideTransition(
       text: '$text',
       duration: duration,
@@ -164,6 +158,7 @@ class _FullscreenPageState extends State<FullscreenPage> {
   }
 
   moreMenu(BuildContext context, Images image) {
+    print(image.toJson());
     showModalBottomSheet(
         backgroundColor: Colors.transparent.withOpacity(0.5),
         isScrollControlled: true,

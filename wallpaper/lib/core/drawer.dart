@@ -6,8 +6,6 @@ import 'package:wallpaper/shared/custom-widgets/custom-text.dart';
 class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final RouteBloc routeBloc = BlocProvider.of<RouteBloc>(context);
-
     return Drawer(
       child: Column(
         children: [
@@ -18,7 +16,7 @@ class MyDrawer extends StatelessWidget {
             title: CustomText(text: 'Home'),
             onTap: (){
               Navigator.pop(context);
-              routeBloc.add(Pages.Home);
+              context.read<RouteBloc>().home();
             },
           ),
           Divider(height: 10, thickness: 2,),
@@ -26,7 +24,7 @@ class MyDrawer extends StatelessWidget {
             title: CustomText(text: 'Favorite'),
             onTap: (){
               Navigator.pop(context);
-              routeBloc.add(Pages.Favorite);
+              context.read<RouteBloc>().favorite();
             },
           ),
           Divider(height: 10, thickness: 2,),

@@ -9,9 +9,7 @@ class Favorite extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FavoriteManager favoriteManager = BlocProvider.of<FavoriteManager>(context);
-    favoriteManager.add(FavoriteEvent.GetFavorites);
-
+    context.read<FavoriteManager>().getFavorites();
     return BlocBuilder<FavoriteManager, List<Images>>(
       builder: (context, images) {
         print(images.length);

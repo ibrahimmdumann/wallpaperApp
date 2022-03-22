@@ -7,9 +7,8 @@ import 'package:wallpaper/pages/splash-screen/splash-screen.dart';
 class BeforeStarting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final HomeManager _homeManager = BlocProvider.of<HomeManager>(context);
-    _homeManager.add(Event.GetImages);
-    
+    context.read<HomeManager>().add(Event.GetImages);
+
     return BlocBuilder<HomeManager, States>(
       builder: (context, states){
         switch(states){
