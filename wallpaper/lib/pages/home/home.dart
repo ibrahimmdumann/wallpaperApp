@@ -12,7 +12,6 @@ class Home extends StatelessWidget {
     var images = context.read<HomeManager>().materialWallpaper.materialWallpaper;
 
     return Container(
-      margin: EdgeInsets.only(left: 5, right: 5),
       child: ListView.separated(
         itemCount: images.length,
         itemBuilder: (_,i){
