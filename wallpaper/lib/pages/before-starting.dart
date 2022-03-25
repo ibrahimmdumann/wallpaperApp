@@ -9,7 +9,7 @@ class BeforeStarting extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<HomeManager>().add(Event.GetImages);
 
-    return BlocBuilder<HomeManager, States>(
+    return BlocBuilder<HomeManager, dynamic>(
       builder: (context, states){
         switch(states){
           case States.Loading:

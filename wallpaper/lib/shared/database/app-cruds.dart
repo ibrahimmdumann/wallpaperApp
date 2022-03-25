@@ -16,7 +16,8 @@ class AppCruds {
 
   Future isFavorite(Images image) async{
     var finder = Finder(filter: Filter.matches('image', image.image));
-    return await _favoriteStore.findFirst(await _db, finder: finder);
+    var a = await _favoriteStore.findFirst(await _db, finder: finder);
+    return a!=null;
   }
 
   Future delete(Images image) async {

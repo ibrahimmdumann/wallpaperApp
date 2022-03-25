@@ -25,7 +25,9 @@ class Images {
         required this.catId,
         required this.image,
         required this.thumb,
-        required this.orjImg
+        required this.orjImg,
+        this.isFav = false,
+        this.primaryDelta = 0
     });
 
     dynamic id;
@@ -33,13 +35,15 @@ class Images {
     String image;
     String thumb;
     String orjImg;
+    bool isFav;
+    double primaryDelta;
 
     factory Images.fromJson(Map<String, dynamic> json) => Images(
         id: json["id"],
         catId: json["cat_id"],
         image: json["image"],
         thumb: "https://idriscelebi.com/eviller_scorpion/upload/thumbs/${json['image']}",
-        orjImg: "https://idriscelebi.com/eviller_scorpion/upload/${json['image']}"
+        orjImg: "https://idriscelebi.com/eviller_scorpion/upload/${json['image']}",
     );
 
     Map<String, dynamic> toJson() => {
@@ -47,6 +51,7 @@ class Images {
         "cat_id": catId,
         "image": image,
         "thumb": thumb,
-        "orjImg": orjImg
+        "orjImg": orjImg,
+        "isFav": isFav
     };
 }
